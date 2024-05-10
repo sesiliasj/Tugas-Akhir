@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/dashboard-general-dashboard');
+// Route::redirect('/', '/dashboard-general-dashboard');
+
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Dashboard
 Route::get('/dashboard-general-dashboard', function () {
