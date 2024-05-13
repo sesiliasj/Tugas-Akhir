@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,14 +21,42 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Dashboard
-Route::get('/dashboard-general-dashboard', function () {
-    return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/dashboard-general-dashboard', function () {
+        return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
+    })->name('dashboard');
+    Route::middleware('auth')->group(function () {
+        Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    });
 });
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'create'])->name('login');
+    Route::post('/login', [LoginController::class, 'store']);
+});
+
+Route::prefix('teacher')->name('teacher')->group(function () {
+    Route::get('/', [TeacherController::class, 'dashboard'])->name('.dashboard');
+    Route::prefix('/exam')->name('.exam')->group(function () {
+        Route::get('/', function () {
+            return view('teacher.exam.index', ['type_menu' => 'exam']);
+        })->name('.index');
+        Route::get('/create', function () {
+            return view('teacher.exam.create', ['type_menu' => 'exam']);
+        })->name('.create');
+        Route::get('/edit/{id}', function ($id) {
+            return view('teacher.exam.edit', ['type_menu' => 'exam', 'id' => $id]);
+        })->name('.edit');
+    });
+});
+
+// Dashboard
+// Route::get('/dashboard-general-dashboard', function () {
+//     return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
+// });
 Route::get('/dashboard-ecommerce-dashboard', function () {
     return view('pages.dashboard-ecommerce-dashboard', ['type_menu' => 'dashboard']);
 });
-
 
 // Layout
 Route::get('/layout-default-layout', function () {
@@ -99,7 +129,6 @@ Route::get('/bootstrap-tooltip', function () {
 Route::get('/bootstrap-typography', function () {
     return view('pages.bootstrap-typography', ['type_menu' => 'bootstrap']);
 });
-
 
 // components
 Route::get('/components-article', function () {
