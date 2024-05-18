@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Teacher\ExamController;
 use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
+use Tests\Feature\ExampleTest;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/** @var \App\Models\User */
+
 // Route::redirect('/', '/dashboard-general-dashboard');
 
 Route::get('/', function () {
@@ -22,11 +27,38 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/dashboard-general-dashboard', function () {
-        return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
-    })->name('dashboard');
+    Route::get('/dashboard', function () {
+        if (Auth::user()->hasRole('teacher')) {
+            return redirect()->route('teacher.dashboard');
+        }
+        if (Auth::user()->hasRole('student')) {
+            return redirect()->route('student.dashboard');
+        }
+    });
     Route::middleware('auth')->group(function () {
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    });
+    Route::middleware('role:student,web')->group(function () {
+        Route::prefix('student')->name('student')->group(function () {
+            Route::get('/', [TeacherController::class, 'dashboard'])->name('.dashboard');
+            Route::prefix('/exam')->name('.exam')->group(function () {
+                Route::get('/', [ExamController::class, 'index'])->name('.index');
+                Route::get('/show/{id}', [ExamController::class, 'show'])->name('.show');
+            });
+        });
+    });
+    Route::middleware('role:teacher,web')->group(function () {
+        Route::prefix('teacher')->name('teacher')->group(function () {
+            Route::get('/', [TeacherController::class, 'dashboard'])->name('.dashboard');
+            Route::prefix('/exam')->name('.exam')->group(function () {
+                Route::get('/', [ExamController::class, 'index'])->name('.index');
+                Route::get('/create', [ExamController::class, 'create'])->name('.create');
+                Route::post('/create', [ExamController::class, 'store'])->name('.store');
+                Route::get('/edit/{id}', [ExamController::class, 'edit'])->name('.edit');
+                Route::post('/edit/{id}', [ExamController::class, 'update'])->name('.update');
+                Route::get('/delete/{id}', [ExamController::class, 'delete'])->name('.delete');
+            });
+        });
     });
 });
 
@@ -35,25 +67,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'store']);
 });
 
-Route::prefix('teacher')->name('teacher')->group(function () {
-    Route::get('/', [TeacherController::class, 'dashboard'])->name('.dashboard');
-    Route::prefix('/exam')->name('.exam')->group(function () {
-        Route::get('/', function () {
-            return view('teacher.exam.index', ['type_menu' => 'exam']);
-        })->name('.index');
-        Route::get('/create', function () {
-            return view('teacher.exam.create', ['type_menu' => 'exam']);
-        })->name('.create');
-        Route::get('/edit/{id}', function ($id) {
-            return view('teacher.exam.edit', ['type_menu' => 'exam', 'id' => $id]);
-        })->name('.edit');
-    });
-});
+
 
 // Dashboard
-// Route::get('/dashboard-general-dashboard', function () {
-//     return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
-// });
+Route::get('/dashboard-general-dashboard', function () {
+    return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
+});
 Route::get('/dashboard-ecommerce-dashboard', function () {
     return view('pages.dashboard-ecommerce-dashboard', ['type_menu' => 'dashboard']);
 });
