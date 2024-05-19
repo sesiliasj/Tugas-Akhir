@@ -12,5 +12,6 @@ class Exam extends Model
     protected $fillable = [
         'name',
         'user_id',
+        'created_at',
     ];
 }

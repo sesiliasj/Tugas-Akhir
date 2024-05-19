@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Teacher\ExamController;
+use App\Http\Controllers\Student\ExamController as StudentExamController;
+use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Teacher\ExamController as TeacherExamController;
 use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Route;
 use Tests\Feature\ExampleTest;
@@ -34,16 +36,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         if (Auth::user()->hasRole('student')) {
             return redirect()->route('student.dashboard');
         }
-    });
+    })->name('dashboard');
     Route::middleware('auth')->group(function () {
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     });
     Route::middleware('role:student,web')->group(function () {
         Route::prefix('student')->name('student')->group(function () {
-            Route::get('/', [TeacherController::class, 'dashboard'])->name('.dashboard');
+            Route::get('/', [StudentController::class, 'dashboard'])->name('.dashboard');
             Route::prefix('/exam')->name('.exam')->group(function () {
-                Route::get('/', [ExamController::class, 'index'])->name('.index');
-                Route::get('/show/{id}', [ExamController::class, 'show'])->name('.show');
+                Route::get('/', [StudentExamController::class, 'index'])->name('.index');
+                Route::get('/show/{id}', [StudentExamController::class, 'show'])->name('.show');
             });
         });
     });
@@ -51,12 +53,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::prefix('teacher')->name('teacher')->group(function () {
             Route::get('/', [TeacherController::class, 'dashboard'])->name('.dashboard');
             Route::prefix('/exam')->name('.exam')->group(function () {
-                Route::get('/', [ExamController::class, 'index'])->name('.index');
-                Route::get('/create', [ExamController::class, 'create'])->name('.create');
-                Route::post('/create', [ExamController::class, 'store'])->name('.store');
-                Route::get('/edit/{id}', [ExamController::class, 'edit'])->name('.edit');
-                Route::post('/edit/{id}', [ExamController::class, 'update'])->name('.update');
-                Route::get('/delete/{id}', [ExamController::class, 'delete'])->name('.delete');
+                Route::get('/', [TeacherExamController::class, 'index'])->name('.index');
+                Route::get('/create', [TeacherExamController::class, 'create'])->name('.create');
+                Route::post('/create', [TeacherExamController::class, 'store'])->name('.store');
+                Route::get('/edit/{id}', [TeacherExamController::class, 'edit'])->name('.edit');
+                Route::post('/edit/{id}', [TeacherExamController::class, 'update'])->name('.update');
+                Route::get('/delete/{id}', [TeacherExamController::class, 'delete'])->name('.delete');
             });
         });
     });

@@ -11,7 +11,8 @@ class ExamController extends Controller
 {
     public function index()
     {
-        return view('teacher.exam.index', ['type_menu' => 'exam']);
+        $exams = Exam::all();
+        return view('teacher.exam.index', ['type_menu' => 'exam', 'exams' => $exams]);
     }
 
     public function create()

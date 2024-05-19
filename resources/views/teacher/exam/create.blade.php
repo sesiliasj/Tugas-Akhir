@@ -25,14 +25,14 @@
             </div>
 
             <div class="section-body">
-
                 <div class="row">
                     <div class="col">
                         <div class="card">
-                            <div class="card-header">
-                                <h4>Input Text</h4>
-                            </div>
                             <div class="card-body">
+                                <div class="form-group">
+                                    <label>Exam Name</label>
+                                    <input type="text" class="form-control">
+                                </div>
                                 <div class="form-group">
                                     <label>Default Input Text</label>
                                     <input type="text" class="form-control">
@@ -199,75 +199,6 @@
                                                     <img src="{{ asset('img/news/img06.jpg') }}" alt="}"
                                                         class="imagecheck-image">
                                                 </figure>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Color</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label>Simple</label>
-                                    <input type="text" class="form-control colorpickerinput">
-                                </div>
-                                <div class="form-group">
-                                    <label>Pick Your Color</label>
-                                    <div class="input-group colorpickerinput">
-                                        <input type="text" class="form-control">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <i class="fas fa-fill-drip"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Color Input</label>
-                                    <div class="row gutters-xs">
-                                        <div class="col-auto">
-                                            <label class="colorinput">
-                                                <input name="color" type="checkbox" value="primary"
-                                                    class="colorinput-input" />
-                                                <span class="colorinput-color bg-primary"></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <label class="colorinput">
-                                                <input name="color" type="checkbox" value="secondary"
-                                                    class="colorinput-input" />
-                                                <span class="colorinput-color bg-secondary"></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <label class="colorinput">
-                                                <input name="color" type="checkbox" value="danger"
-                                                    class="colorinput-input" />
-                                                <span class="colorinput-color bg-danger"></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <label class="colorinput">
-                                                <input name="color" type="checkbox" value="warning"
-                                                    class="colorinput-input" />
-                                                <span class="colorinput-color bg-warning"></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <label class="colorinput">
-                                                <input name="color" type="checkbox" value="info"
-                                                    class="colorinput-input" />
-                                                <span class="colorinput-color bg-info"></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <label class="colorinput">
-                                                <input name="color" type="checkbox" value="success"
-                                                    class="colorinput-input" />
-                                                <span class="colorinput-color bg-success"></span>
                                             </label>
                                         </div>
                                     </div>
