@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Student\ExamController as StudentExamController;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Teacher\ExamController as TeacherExamController;
 use App\Http\Controllers\Teacher\TeacherController;
+use App\Http\Controllers\Admin\TeacherController as AdminTeacherController;
 use Illuminate\Support\Facades\Route;
 use Tests\Feature\ExampleTest;
 use Illuminate\Support\Facades\Auth;
@@ -36,9 +39,33 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         if (Auth::user()->hasRole('student')) {
             return redirect()->route('student.dashboard');
         }
+        if (Auth::user()->hasRole('admin')) {
+            return redirect()->route('admin.dashboard');
+        }
     })->name('dashboard');
     Route::middleware('auth')->group(function () {
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    });
+    Route::middleware('role:admin,web')->group(function () {
+        Route::prefix('admin')->name('admin')->group(function () {
+            Route::get('/', [AdminController::class, 'dashboard'])->name('.dashboard');
+            Route::prefix('/teacher')->name('.teacher')->group(function () {
+                Route::get('/', [AdminTeacherController::class, 'index'])->name('.index');
+                Route::get('/create', [AdminTeacherController::class, 'create'])->name('.create');
+                Route::post('/create', [AdminTeacherController::class, 'store'])->name('.store');
+                Route::get('/edit/{id}', [AdminTeacherController::class, 'edit'])->name('.edit');
+                Route::post('/edit/{id}', [AdminTeacherController::class, 'update'])->name('.update');
+                Route::get('/delete/{id}', [AdminTeacherController::class, 'delete'])->name('.delete');
+            });
+            Route::prefix('/course')->name('.course')->group(function () {
+                Route::get('/', [CourseController::class, 'index'])->name('.index');
+                Route::get('/create', [CourseController::class, 'create'])->name('.create');
+                Route::post('/create', [CourseController::class, 'store'])->name('.store');
+                Route::get('/edit/{id}', [CourseController::class, 'edit'])->name('.edit');
+                Route::post('/edit/{id}', [CourseController::class, 'update'])->name('.update');
+                Route::get('/delete/{id}', [CourseController::class, 'delete'])->name('.delete');
+            });
+        });
     });
     Route::middleware('role:student,web')->group(function () {
         Route::prefix('student')->name('student')->group(function () {

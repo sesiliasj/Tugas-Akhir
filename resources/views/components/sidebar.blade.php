@@ -17,6 +17,16 @@
                         Exam</a>
                 </li>
             @endif
+            @if (Request::is('admin*'))
+                <li class="{{ Request::is('admin/teacher*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.teacher.index') }}"><i class="fas fa-user"></i>
+                        Teacher</a>
+                </li>
+                <li class="{{ Request::is('admin/course*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.course.index') }}"><i class="fas fa-boook"></i>
+                        Course</a>
+                </li>
+            @endif
         </ul>
     </aside>
 </div>
