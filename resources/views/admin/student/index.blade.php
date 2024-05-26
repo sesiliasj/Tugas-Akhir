@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Course')
+@section('title', 'Teacher')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -10,10 +10,10 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Course</h1>
+                <h1>Student</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Admin</a></div>
-                    <div class="breadcrumb-item"><a>Course</a></div>
+                    <div class="breadcrumb-item"><a>Student</a></div>
                 </div>
             </div>
 
@@ -27,14 +27,18 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($courses as $course)
+                                        @foreach ($students as $student)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $course->name }}</td>
+                                                <td>{{ $student->name }}</td>
+                                                <td>{{ $student->email }}</td>
+                                                <td>{{ $student->created_at }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.course.delete', $course->id) }}"
+                                                    <a href="{{ route('admin.student.delete', $student->id) }}"
                                                         class="btn btn-danger">Remove</a>
                                                 </td>
                                             </tr>

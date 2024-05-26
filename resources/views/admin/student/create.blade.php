@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create Course')
+@section('title', 'Create Exam')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,10 +16,10 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Course</h1>
+                <h1>Student</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Admin</a></div>
-                    <div class="breadcrumb-item"><a href="{{ route('admin.course.index') }}">Course</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Admin</a></div>
+                    <div class="breadcrumb-item"><a href="{{ route('admin.student.index') }}">Student</a></div>
                     <div class="breadcrumb-item">Create</div>
                 </div>
             </div>
@@ -29,14 +29,22 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('admin.course.store') }}" method="POST">
+                                <form action="{{ route('admin.student.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label>Course Name</label>
+                                        <label>Student Name</label>
                                         <input type="text" class="form-control" name="name">
                                     </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" name="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" class="form-control" name="password">
+                                    </div>
                                     <div class="pt-0">
-                                        <input type="submit" value="Add" class="btn btn-primary">
+                                        <input type="submit" value="Create" class="btn btn-primary">
                                     </div>
                                 </form>
                             </div>

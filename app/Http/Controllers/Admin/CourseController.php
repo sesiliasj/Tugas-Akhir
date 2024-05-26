@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreCourseRequest;
+use App\Http\Requests\Admin\UpdateCourseRequest;
 use App\Models\Course;
-use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
     public function index()
     {
         $courses = Course::all();
-        return view('admin.course.index', ['courses' => $courses, 'type_menu' => 'course']);
+
+        return view('admin.course.index', ['courses' => $courses]);
     }
 
     public function create()
@@ -19,40 +21,33 @@ class CourseController extends Controller
         return view('admin.course.create', ['type_menu' => 'course']);
     }
 
-    public function store(Request $request)
+    public function store(StoreCourseRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
+        $validated = $request->validated();
 
         $course = new Course();
-        $course->name = $request->name;
-        $course->description = $request->description;
+        $course->fill($validated);
         $course->save();
 
-        return redirect()->route('admin.courses.index');
+        return redirect()->route('admin.course.index');
     }
 
     public function edit($id)
     {
         $course = Course::findOrFail($id);
-        return view('admin.course.edit', ['course' => $course, 'type_menu' => 'course']);
+
+        return view('admin.course.edit', ['course' => $course]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCourseRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
+        $validated = $request->validated();
 
         $course = Course::findOrFail($id);
-        $course->name = $request->name;
-        $course->description = $request->description;
+        $course->fill($validated);
         $course->save();
 
-        return redirect()->route('admin.courses.index');
+        return redirect()->route('admin.course.index');
     }
 
     public function destroy($id)
@@ -60,12 +55,6 @@ class CourseController extends Controller
         $course = Course::findOrFail($id);
         $course->delete();
 
-        return redirect()->route('admin.courses.index');
-    }
-
-    public function show($id)
-    {
-        $course = Course::findOrFail($id);
-        return view('admin.course.show', ['course' => $course, 'type_menu' => 'course']);
+        return redirect()->route('admin.course.index');
     }
 }

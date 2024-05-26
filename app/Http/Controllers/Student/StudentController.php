@@ -8,6 +8,6 @@ class StudentController extends Controller
 {
     public function dashboard()
     {
-        return view('student.dashboard', ['type_menu' => 'dashboard']);
+        return view('student.dashboard');
     }
 }

@@ -10,10 +10,10 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Exam</h1>
+                <h1>Teacher</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="{{ route('teacher.dashboard') }}">Teacher</a></div>
-                    <div class="breadcrumb-item"><a>Exam</a></div>
+                    <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Admin</a></div>
+                    <div class="breadcrumb-item"><a>Teacher</a></div>
                 </div>
             </div>
 
@@ -27,6 +27,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
+                                            <th>Email</th>
                                             <th>Created At</th>
                                             {{-- <th>Status</th> --}}
                                             <th>Action</th>
@@ -35,6 +36,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $teacher->name }}</td>
+                                                <td>{{ $teacher->email }}</td>
                                                 <td>{{ $teacher->created_at }}</td>
                                                 {{-- <td>
                                                     <div class="badge badge-success">Active</div>

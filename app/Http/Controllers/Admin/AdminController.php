@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -12,6 +12,10 @@ class AdminController extends Controller
     {
         $teachers = User::role('teacher')->get();
         $teacher = $teachers->count();
-        return view('admin.dashboard', ['teacher' => $teacher, 'type_menu' => 'dashboard']);
+        $students = User::role('student')->get();
+        $student = $students->count();
+        $course = Course::count();
+
+        return view('admin.dashboard', ['teacher' => $teacher, 'student' => $student, 'course' => $course]);
     }
 }
