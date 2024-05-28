@@ -38,6 +38,8 @@
                                                 <td>{{ $student->email }}</td>
                                                 <td>{{ $student->created_at }}</td>
                                                 <td>
+                                                    <a href="{{ route('admin.student.edit', $student->id) }}"
+                                                        class="btn btn-primary">Update</a>
                                                     <a href="{{ route('admin.student.delete', $student->id) }}"
                                                         class="btn btn-danger">Remove</a>
                                                 </td>

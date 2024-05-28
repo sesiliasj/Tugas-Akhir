@@ -34,6 +34,8 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $course->name }}</td>
                                                 <td>
+                                                    <a href="{{ route('admin.course.edit', $course->id) }}"
+                                                        class="btn btn-primary">Edit</a>
                                                     <a href="{{ route('admin.course.delete', $course->id) }}"
                                                         class="btn btn-danger">Remove</a>
                                                 </td>

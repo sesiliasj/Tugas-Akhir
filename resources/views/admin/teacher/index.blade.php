@@ -29,7 +29,6 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Created At</th>
-                                            {{-- <th>Status</th> --}}
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($teachers as $teacher)
@@ -38,10 +37,9 @@
                                                 <td>{{ $teacher->name }}</td>
                                                 <td>{{ $teacher->email }}</td>
                                                 <td>{{ $teacher->created_at }}</td>
-                                                {{-- <td>
-                                                    <div class="badge badge-success">Active</div>
-                                                </td> --}}
                                                 <td>
+                                                    <a href="{{ route('admin.teacher.update', $teacher->id) }}"
+                                                        class="btn btn-primary">Edit</a>
                                                     <a href="{{ route('admin.teacher.delete', $teacher->id) }}"
                                                         class="btn btn-danger">Remove</a>
                                                 </td>

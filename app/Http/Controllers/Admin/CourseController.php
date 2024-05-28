@@ -18,7 +18,7 @@ class CourseController extends Controller
 
     public function create()
     {
-        return view('admin.course.create', ['type_menu' => 'course']);
+        return view('admin.course.create');
     }
 
     public function store(StoreCourseRequest $request)

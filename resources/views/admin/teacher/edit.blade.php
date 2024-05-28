@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create Exam')
+@section('title', 'Edit Teacher')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,11 +16,11 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Exam</h1>
+                <h1>Teacher</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="{{ route('teacher.dashboard') }}">Teacher</a></div>
-                    <div class="breadcrumb-item"><a href="{{ route('teacher.exam.index') }}">Exam</a></div>
-                    <div class="breadcrumb-item">Create</div>
+                    <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Admin</a></div>
+                    <div class="breadcrumb-item"><a href="{{ route('admin.teacher.index') }}">Teacher</a></div>
+                    <div class="breadcrumb-item">Edit</div>
                 </div>
             </div>
 
@@ -29,180 +29,22 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label>Exam Name</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Default Input Text</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Phone Number (US Format)</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="fas fa-phone"></i>
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control phone-number">
+                                <form action="{{ route('admin.teacher.update', $teacher->id) }}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Teacher Name</label>
+                                        <input type="text" class="form-control" name="name"
+                                            value="{{ $teacher->name }}">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Password Strength</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="fas fa-lock"></i>
-                                            </div>
-                                        </div>
-                                        <input type="password" class="form-control pwstrength" data-indicator="pwindicator">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" name="email"
+                                            value="{{ $teacher->email }}">
                                     </div>
-                                    <div id="pwindicator" class="pwindicator">
-                                        <div class="bar"></div>
-                                        <div class="label"></div>
+                                    <div class="pt-0">
+                                        <input type="submit" value="Edit" class="btn btn-primary">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Currency</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                $
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control currency">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Purchase Code</label>
-                                    <input type="text" class="form-control purchase-code"
-                                        placeholder="ASDF-GHIJ-KLMN-OPQR">
-                                </div>
-                                <div class="form-group">
-                                    <label>Invoice</label>
-                                    <input type="text" class="form-control invoice-input">
-                                </div>
-                                <div class="form-group">
-                                    <label>Date</label>
-                                    <input type="text" class="form-control datemask" placeholder="YYYY/MM/DD">
-                                </div>
-                                <div class="form-group">
-                                    <label>Credit Card</label>
-                                    <input type="text" class="form-control creditcard">
-                                </div>
-                                <div class="form-group">
-                                    <label>Tags</label>
-                                    <input type="text" class="form-control inputtags">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Toggle Switches</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <div class="control-label">Toggle switches</div>
-                                    <div class="custom-switches-stacked mt-2">
-                                        <label class="custom-switch">
-                                            <input type="radio" name="option" value="1" class="custom-switch-input"
-                                                checked>
-                                            <span class="custom-switch-indicator"></span>
-                                            <span class="custom-switch-description">Option 1</span>
-                                        </label>
-                                        <label class="custom-switch">
-                                            <input type="radio" name="option" value="2" class="custom-switch-input">
-                                            <span class="custom-switch-indicator"></span>
-                                            <span class="custom-switch-description">Option 2</span>
-                                        </label>
-                                        <label class="custom-switch">
-                                            <input type="radio" name="option" value="3" class="custom-switch-input">
-                                            <span class="custom-switch-indicator"></span>
-                                            <span class="custom-switch-description">Option 3</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="control-label">Toggle switch single</div>
-                                    <label class="custom-switch mt-2">
-                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                                        <span class="custom-switch-indicator"></span>
-                                        <span class="custom-switch-description">I agree with terms and conditions</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Image Check</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label class="form-label">Image Check</label>
-                                    <div class="row gutters-sm">
-                                        <div class="col-6 col-sm-4">
-                                            <label class="imagecheck mb-4">
-                                                <input name="imagecheck" type="checkbox" value="1"
-                                                    class="imagecheck-input" />
-                                                <figure class="imagecheck-figure">
-                                                    <img src="{{ asset('img/news/img01.jpg') }}" alt="}"
-                                                        class="imagecheck-image">
-                                                </figure>
-                                            </label>
-                                        </div>
-                                        <div class="col-6 col-sm-4">
-                                            <label class="imagecheck mb-4">
-                                                <input name="imagecheck" type="checkbox" value="2"
-                                                    class="imagecheck-input" checked />
-                                                <figure class="imagecheck-figure">
-                                                    <img src="{{ asset('img/news/img02.jpg') }}" alt="}"
-                                                        class="imagecheck-image">
-                                                </figure>
-                                            </label>
-                                        </div>
-                                        <div class="col-6 col-sm-4">
-                                            <label class="imagecheck mb-4">
-                                                <input name="imagecheck" type="checkbox" value="3"
-                                                    class="imagecheck-input" />
-                                                <figure class="imagecheck-figure">
-                                                    <img src="{{ asset('img/news/img03.jpg') }}" alt="}"
-                                                        class="imagecheck-image">
-                                                </figure>
-                                            </label>
-                                        </div>
-                                        <div class="col-6 col-sm-4">
-                                            <label class="imagecheck mb-4">
-                                                <input name="imagecheck" type="checkbox" value="4"
-                                                    class="imagecheck-input" checked />
-                                                <figure class="imagecheck-figure">
-                                                    <img src="{{ asset('img/news/img04.jpg') }}" alt="}"
-                                                        class="imagecheck-image">
-                                                </figure>
-                                            </label>
-                                        </div>
-                                        <div class="col-6 col-sm-4">
-                                            <label class="imagecheck mb-4">
-                                                <input name="imagecheck" type="checkbox" value="5"
-                                                    class="imagecheck-input" />
-                                                <figure class="imagecheck-figure">
-                                                    <img src="{{ asset('img/news/img05.jpg') }}" alt="}"
-                                                        class="imagecheck-image">
-                                                </figure>
-                                            </label>
-                                        </div>
-                                        <div class="col-6 col-sm-4">
-                                            <label class="imagecheck mb-4">
-                                                <input name="imagecheck" type="checkbox" value="6"
-                                                    class="imagecheck-input" />
-                                                <figure class="imagecheck-figure">
-                                                    <img src="{{ asset('img/news/img06.jpg') }}" alt="}"
-                                                        class="imagecheck-image">
-                                                </figure>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

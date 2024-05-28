@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreStudentRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\UpdateStudentRequest;
 use App\Models\User;
 
 class StudentController extends Controller
@@ -24,6 +24,7 @@ class StudentController extends Controller
     public function store(StoreStudentRequest $request)
     {
         $validated = $request->validated();
+
         $student = new User();
         $student->name = $validated['name'];
         $student->email = $validated['email'];
@@ -41,16 +42,13 @@ class StudentController extends Controller
         return view('admin.student.edit', ['student' => $student]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateStudentRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
-        ]);
+        $validated = $request->validated();
 
         $student = User::findOrFail($id);
-        $student->name = $request->name;
-        $student->email = $request->email;
+        $student->name = $validated['name'];
+        $student->email = $validated['email'];
         $student->save();
 
         return redirect()->route('admin.student.index');

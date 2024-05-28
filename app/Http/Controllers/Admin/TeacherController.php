@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreTeacherRequest;
+use App\Http\Requests\Admin\UpdateTeacherRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -41,16 +42,13 @@ class TeacherController extends Controller
         return view('admin.teacher.edit', ['teacher' => $teacher]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateTeacherRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
-        ]);
+        $validated = $request->validated();
 
         $teacher = User::findOrFail($id);
-        $teacher->name = $request->name;
-        $teacher->email = $request->email;
+        $teacher->name = $validated['name'];
+        $teacher->email = $validated['email'];
         $teacher->save();
 
         return redirect()->route('admin.teacher.index');
