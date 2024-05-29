@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreStudentRequest;
 use App\Http\Requests\Admin\UpdateStudentRequest;
+use App\Models\Course;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
@@ -59,6 +61,23 @@ class StudentController extends Controller
         $student = User::findOrFail($id);
         $student->delete();
 
+        return redirect()->route('admin.student.index');
+    }
+
+    public function assignCourse($id)
+    {
+        $student = User::findOrFail($id);
+        $courses = Course::all();
+
+        return view('admin.student.assign-course', ['student' => $student, 'courses' => $courses]);
+    }
+
+    public function addCourse($id, Request $request)
+    {
+        foreach ($request->course_id as $course_id) {
+            $userHasCourse = new UserHasCourseController();
+            $userHasCourse->addCourse($id, $course_id);
+        }
         return redirect()->route('admin.student.index');
     }
 }
