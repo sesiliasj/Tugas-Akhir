@@ -14,8 +14,14 @@ class StudentController extends Controller
     public function index()
     {
         $students = User::role('student')->get();
+        $getCourse = new UserHasCourseController();
+        $course = [];
 
-        return view('admin.student.index', ['students' => $students]);
+        foreach ($students as $student) {
+            $course[$student->id] = $getCourse->getCourse($student->id);
+        }
+
+        return view('admin.student.index', ['students' => $students, 'course' => $course]);
     }
 
     public function create()

@@ -28,6 +28,7 @@
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Email</th>
+                                            <th>Assigned Course</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
@@ -36,6 +37,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $student->name }}</td>
                                                 <td>{{ $student->email }}</td>
+                                                <td>{{ $course[$student->id] }}</td>
                                                 <td>{{ $student->created_at }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.student.edit', $student->id) }}"
