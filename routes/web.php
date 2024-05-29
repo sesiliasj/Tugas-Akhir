@@ -64,6 +64,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
                 Route::get('/edit/{id}', [AdminTeacherController::class, 'edit'])->name('.edit');
                 Route::post('/edit/{id}', [AdminTeacherController::class, 'update'])->name('.update');
                 Route::get('/delete/{id}', [AdminTeacherController::class, 'destroy'])->name('.delete');
+                Route::get('/assign-course/{id}', [AdminTeacherController::class, 'assignCourse'])->name('.assign-course');
+                Route::post('/assign-course/{id}', [AdminTeacherController::class, 'addCourse'])->name('.add-course');
             });
             Route::prefix('/student')->name('.student')->group(function () {
                 Route::get('/', [AdminStudentController::class, 'index'])->name('.index');
@@ -72,6 +74,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
                 Route::get('/edit/{id}', [AdminStudentController::class, 'edit'])->name('.edit');
                 Route::post('/edit/{id}', [AdminStudentController::class, 'update'])->name('.update');
                 Route::get('/delete/{id}', [AdminStudentController::class, 'destroy'])->name('.delete');
+                Route::get('/assign-course/{id}', [AdminStudentController::class, 'assignCourse'])->name('.assign-course');
+                Route::post('/assign-course/{id}', [AdminStudentController::class, 'addCourse'])->name('.add-course');
             });
         });
     });
