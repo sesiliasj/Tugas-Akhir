@@ -20,7 +20,7 @@
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Admin</a></div>
                     <div class="breadcrumb-item"><a href="{{ route('admin.student.index') }}">Student</a></div>
-                    <div class="breadcrumb-item">Create</div>
+                    <div class="breadcrumb-item">Assign Course</div>
                 </div>
             </div>
 

@@ -42,6 +42,12 @@
                                                 <td>
                                                     <a href="{{ route('admin.student.edit', $student->id) }}"
                                                         class="btn btn-primary">Update</a>
+                                                    @if (!$course[$student->id])
+                                                        <a href="{{ route('admin.student.assign-course', $student->id) }}"
+                                                            class="btn btn-primary">Assign Course</a>
+                                                    @else
+                                                        <a href="" class="btn btn-primary disabled">Assign Course</a>
+                                                    @endif
                                                     <a href="{{ route('admin.student.delete', $student->id) }}"
                                                         class="btn btn-danger">Remove</a>
                                                 </td>
