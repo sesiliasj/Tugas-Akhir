@@ -24,9 +24,11 @@ class UserHasCourseController extends Controller
     public function getCourse($user_id)
     {
         $course = UserHasCourse::where('user_id', $user_id)->get()->pluck('course_id');
+
         if ($course->isEmpty()) {
             return '';
         }
+
         if (count($course) > 1) {
             $courses = Course::whereIn('id', $course)->get();
             $courseName = '';
@@ -35,6 +37,7 @@ class UserHasCourseController extends Controller
             }
             return rtrim($courseName, ', ');
         }
+
         $course = Course::find($course->first());
         return $course->name;
     }

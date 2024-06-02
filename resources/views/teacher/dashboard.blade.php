@@ -25,7 +25,7 @@
                                 <h4>Total Exam</h4>
                             </div>
                             <div class="card-body">
-                                10
+                                {{ $exam }}
                             </div>
                         </div>
                     </div>
