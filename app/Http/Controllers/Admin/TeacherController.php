@@ -82,6 +82,7 @@ class TeacherController extends Controller
         $course_id = $request->course_id;
         $userHasCourse = new UserHasCourseController();
         $userHasCourse->addCourse($id, $course_id);
+
         return redirect()->route('admin.teacher.index');
     }
 }

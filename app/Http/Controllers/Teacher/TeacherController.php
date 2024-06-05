@@ -12,6 +12,7 @@ class TeacherController extends Controller
         $userHasCourseController = new UserHasCourseController();
         $course_id = $userHasCourseController->getCourseId(auth()->user()->id);
         $exam = Exam::where('course_id', $course_id)->get()->count();
+
         return view('teacher.dashboard', ['exam' => $exam]);
     }
 }

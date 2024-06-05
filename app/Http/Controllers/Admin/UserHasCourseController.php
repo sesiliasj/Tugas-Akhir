@@ -33,12 +33,14 @@ class UserHasCourseController extends Controller
             $courses = Course::whereIn('id', $course)->get();
             $courseName = '';
             foreach ($courses as $course) {
-                $courseName .= $course->name . ', ';
+                $courseName .= $course->name.', ';
             }
+
             return rtrim($courseName, ', ');
         }
 
         $course = Course::find($course->first());
+
         return $course->name;
     }
 }

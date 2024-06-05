@@ -84,6 +84,7 @@ class StudentController extends Controller
             $userHasCourse = new UserHasCourseController();
             $userHasCourse->addCourse($id, $course_id);
         }
+
         return redirect()->route('admin.student.index');
     }
 }
