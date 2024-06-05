@@ -10,7 +10,9 @@ class ExamController extends Controller
 {
     public function index()
     {
-        $exams = Exam::all();
+        $userHasCourseController = new UserHasCourseController();
+        $course_id = $userHasCourseController->getCourseId(auth()->user()->id);
+        $exams = Exam::where('course_id', $course_id)->get();
 
         return view('teacher.exam.index', ['exams' => $exams]);
     }

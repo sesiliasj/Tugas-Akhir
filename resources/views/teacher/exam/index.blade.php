@@ -28,7 +28,7 @@
                                             <th>#</th>
                                             <th>Name</th>
                                             <th>Created At</th>
-                                            {{-- <th>Status</th> --}}
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($exams as $exam)
@@ -36,29 +36,21 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $exam->name }}</td>
                                                 <td>{{ $exam->created_at }}</td>
-                                                {{-- <td>
-                                                    <div class="badge badge-success">Active</div>
-                                                </td> --}}
                                                 <td>
-                                                    <a href="{{ route('teacher.exam.show', $exam->id) }}"
-                                                        class="btn btn-secondary">Detail</a>
-                                                    <a href="{{ route('teacher.exam.show', $exam->id) }}"
-                                                        class="btn btn-secondary">Remove</a>
+                                                    @if ($exam->is_open)
+                                                        <div class="badge badge-success">Open</div>
+                                                    @else
+                                                        <div class="badge badge-danger">Closed</div>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    {{-- <a href="{{ route('teacher.exam.show', $exam->id) }}"
+                                                        class="btn btn-secondary">Detail</a> --}}
+                                                    {{-- <a href="{{ route('teacher.exam.show', $exam->id) }}"
+                                                        class="btn btn-secondary">Remove</a> --}}
                                                 </td>
                                             </tr>
                                         @endforeach
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Irwansyah Saputra</td>
-                                            <td>2017-01-09</td>
-                                            {{-- <td>
-                                                <div class="badge badge-success">Active</div>
-                                            </td> --}}
-                                            <td>
-                                                <a href="#" class="btn btn-primary">Detail</a>
-                                                <a href="#" class="btn btn-danger">Remove</a>
-                                            </td>
-                                        </tr>
                                     </table>
                                 </div>
                             </div>

@@ -33,6 +33,8 @@
                                     @csrf
                                     <div class="section-title">Select Course</div>
                                     <div class="form-group">
+                                        @if (empty($courses))
+                                        @endif
                                         <select class="form-control select2" name="course_id">
                                             <option>Select Course</option>
                                             @foreach ($courses as $course)

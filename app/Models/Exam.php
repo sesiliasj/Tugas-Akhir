@@ -12,6 +12,7 @@ class Exam extends Model
     protected $fillable = [
         'name',
         'user_id',
+        'course_id',
         'created_at',
     ];
 }
