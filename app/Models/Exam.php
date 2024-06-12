@@ -13,6 +13,7 @@ class Exam extends Model
         'name',
         'user_id',
         'course_id',
-        'created_at',
+        'is_open',
+        'content',
     ];
 }

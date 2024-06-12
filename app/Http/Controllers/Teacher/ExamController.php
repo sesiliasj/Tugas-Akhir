@@ -19,7 +19,10 @@ class ExamController extends Controller
 
     public function create()
     {
-        return view('teacher.exam.create');
+        $userHasCourseController = new UserHasCourseController();
+        $course_id = $userHasCourseController->getCourseId(auth()->user()->id);
+        $user_id = auth()->user()->id;
+        return view('teacher.exam.create', ['course_id' => $course_id, 'user_id' => $user_id]);
     }
 
     public function store(StoreExamRequest $request)
@@ -33,5 +36,31 @@ class ExamController extends Controller
     public function edit($id)
     {
         return view('teacher.exam.edit', ['id' => $id]);
+    }
+
+    public function destroy($id)
+    {
+        $exam = Exam::find($id);
+        $exam->delete();
+
+        return redirect()->route('teacher.exam.index');
+    }
+
+    public function open($id)
+    {
+        $exam = Exam::find($id);
+        $exam->is_open = true;
+        $exam->save();
+
+        return redirect()->route('teacher.exam.index');
+    }
+
+    public function close($id)
+    {
+        $exam = Exam::find($id);
+        $exam->is_open = false;
+        $exam->save();
+
+        return redirect()->route('teacher.exam.index');
     }
 }

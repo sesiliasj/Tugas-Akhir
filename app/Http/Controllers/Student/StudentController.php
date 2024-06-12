@@ -9,15 +9,8 @@ class StudentController extends Controller
 {
     public function dashboard()
     {
-        $course = new UserHasCourseController;
-        $course_id = $course->getCourseId(auth()->user()->id);
-
-        $exams = collect();
-        foreach ($course_id as $id) {
-            $exam = Exam::where('course_id', $id)->get();
-            $exams = $exams->merge($exam);
-        }
-
+        $exams = new ExamController;
+        $exams = $exams->getActiveExam();
         $count = $exams->count();
         return view('student.dashboard', ['exam' => $count]);
     }

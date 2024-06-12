@@ -59,6 +59,16 @@
                     </ul>
                 </li>
             @endif
+            @if (Request::is('student*'))
+                <li class="nav-item dropdown {{ Request::is('student/exam*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-book"></i><span>Exam</span></a>
+                    <ul class="dropdown-menu">
+                        <li class='{{ Request::is('student/exam') ? 'active' : '' }}'>
+                            <a class="nav-link" href="{{ route('student.exam.index') }}">Index</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
         </ul>
     </aside>
 </div>
