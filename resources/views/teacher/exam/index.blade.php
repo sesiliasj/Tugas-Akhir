@@ -44,10 +44,20 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{-- <a href="{{ route('teacher.exam.show', $exam->id) }}"
-                                                        class="btn btn-secondary">Detail</a> --}}
-                                                    {{-- <a href="{{ route('teacher.exam.show', $exam->id) }}"
-                                                        class="btn btn-secondary">Remove</a> --}}
+                                                    @if ($exam->is_open)
+                                                        <form action="{{ route('teacher.exam.close', $exam->id) }}"
+                                                            method="POST">
+                                                        @else
+                                                            <form action="{{ route('teacher.exam.open', $exam->id) }}"
+                                                                method="POST">
+                                                    @endif
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-primary">Change Status</button>
+                                                    <a href="{{ route('teacher.exam.edit', $exam->id) }}"
+                                                        class="btn btn-primary">Edit</a>
+                                                    <a href="{{ route('teacher.exam.delete', $exam->id) }}"
+                                                        class="btn btn-danger">Remove</a>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach

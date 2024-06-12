@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\TeacherController as AdminTeacherController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Student\ExamController as StudentExamController;
 use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Teacher\AnswerController as TeacherAnswerController;
 use App\Http\Controllers\Teacher\ExamController as TeacherExamController;
 use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Auth;
@@ -97,7 +98,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
                 Route::post('/create', [TeacherExamController::class, 'store'])->name('.store');
                 Route::get('/edit/{id}', [TeacherExamController::class, 'edit'])->name('.edit');
                 Route::post('/edit/{id}', [TeacherExamController::class, 'update'])->name('.update');
-                Route::get('/delete/{id}', [TeacherExamController::class, 'delete'])->name('.delete');
+                Route::get('/delete/{id}', [TeacherExamController::class, 'destroy'])->name('.delete');
+                Route::post('/open/{id}', [TeacherExamController::class, 'open'])->name('.open');
+                Route::post('/close/{id}', [TeacherExamController::class, 'close'])->name('.close');
+            });
+            Route::prefix('/answer')->name('.name')->group(function () {
+                Route::get('/', [TeacherAnswerController::class, 'index'])->name('.index');
             });
         });
     });
