@@ -26,26 +26,26 @@
                                     <table class="table-bordered table-md table">
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Created At</th>
-                                            <th>Status</th>
+                                            <th>Exam Name</th>
+                                            {{-- <th>Created At</th> --}}
+                                            {{-- <th>Status</th> --}}
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($exams as $exam)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $exam->name }}</td>
-                                                <td>{{ $exam->created_at }}</td>
-                                                <td>
+                                                {{-- <td>{{ $exam->created_at }}</td> --}}
+                                                {{-- <td>
                                                     @if ($exam->is_open)
                                                         <div class="badge badge-success">Open</div>
                                                     @else
                                                         <div class="badge badge-danger">Closed</div>
                                                     @endif
-                                                </td>
+                                                </td> --}}
                                                 <td>
-                                                    {{-- <a href="{{ route('teacher.exam.show', $exam->id) }}"
-                                                        class="btn btn-secondary">Detail</a> --}}
+                                                    <a href="{{ route('student.exam.answer', $exam->id) }}"
+                                                        class="btn btn-primary">Kerjakan</a>
                                                     {{-- <a href="{{ route('teacher.exam.show', $exam->id) }}"
                                                         class="btn btn-secondary">Remove</a> --}}
                                                 </td>

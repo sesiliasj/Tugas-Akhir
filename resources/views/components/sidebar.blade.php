@@ -23,6 +23,14 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown {{ Request::is('teacher/answer*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-pencil"></i><span>Answer</span></a>
+                    <ul class="dropdown-menu">
+                        <li class='{{ Request::is('teacher/answer') ? 'active' : '' }}'>
+                            <a class="nav-link" href="{{ route('teacher.answer.index') }}">Index</a>
+                        </li>
+                    </ul>
+                </li>
             @endif
             @if (Request::is('admin*'))
                 <li class="nav-item dropdown {{ Request::is('admin/course*') ? 'active' : '' }}">
