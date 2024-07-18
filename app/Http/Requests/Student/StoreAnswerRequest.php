@@ -23,7 +23,6 @@ class StoreAnswerRequest extends FormRequest
     {
         return [
             'answer' => ['required', 'string'],
-
         ];
     }
 }

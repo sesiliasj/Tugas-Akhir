@@ -16,5 +16,6 @@ class Answer extends Model
         'student_id',
         'answer',
         'score',
+        'created_at'
     ];
 }
