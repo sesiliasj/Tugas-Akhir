@@ -10,7 +10,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Answer</h1>
+                <h1>Answer of {{ $exam->name }}</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="{{ route('teacher.dashboard') }}">Teacher</a></div>
                     <div class="breadcrumb-item"><a>Answer</a></div>
@@ -26,22 +26,29 @@
                                     <table class="table-bordered table-md table">
                                         <tr>
                                             <th>#</th>
-                                            <th>Exam Name</th>
-                                            <th>Created</th>
+                                            <th>Student</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($exams as $exam)
+                                        @foreach ($students as $student)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $exam->name }}</td>
-                                                <td>{{ $exam->created_at }}</td>
+                                                <td>{{ $student->name }}</td>
                                                 <td>
-                                                    <a href="{{ route('teacher.answer.exam', $exam->id) }}"
-                                                        class="btn btn-primary">Show Answer</a>
-                                                    {{-- <a href="{{ route('teacher.answer.show', $exam->id) }}"
-                                                        class="btn"><i class="fas fa-eye"></i></a>
-                                                    <a href="{{ route('teacher.answer.show', $exam->id) }}"
-                                                        class="btn"><i class="fas fa-download"></i></a> --}}
+                                                    @if ($student->answer)
+                                                        <div class="badge badge-success">Collected</div>
+                                                    @else
+                                                        <div class="badge badge-danger">Not Yet</div>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($student->answer)
+                                                        <a href="{{ route('teacher.answer.show', $exam->id) }}"
+                                                            class="btn"><i class="fas fa-eye"></i></a>
+                                                        <a href="{{ route('teacher.answer.show', $exam->id) }}"
+                                                            class="btn"><i class="fas fa-download"></i>
+                                                        </a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
+use App\Models\Course;
 use App\Models\Exam;
+use App\Models\User;
+use App\Models\UserHasCourse;
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller
@@ -13,10 +16,32 @@ class AnswerController extends Controller
     {
         $course = new UserHasCourseController;
         $course_id = $course->getCourseId(auth()->user()->id);
-        $exams = Exam::where('course_id', $course_id)->where('is_open', true)->get();
-        dd($exams);
+        $exams = Exam::where('course_id', $course_id)->get();
         return view('teacher.answer.index', ['exams' => $exams]);
     }
+
+    public function showAnswer($id)
+    {
+        $exam = Exam::find($id);
+        $course = Course::find($exam->course_id);
+        $users = UserHasCourse::where('course_id', $course->id)->get();
+        $students = collect();
+
+        foreach ($users as $userCourse) {
+            $user = User::find($userCourse->user_id);
+            if ($user && $user->hasRole('student')) {
+                $students->push($user);
+            }
+        }
+
+        foreach ($students as $student) {
+            $answer = Answer::where('exam_id', $id)->where('student_id', $student->id)->get();
+            $student->answer = $answer->first();
+        }
+
+        return view('teacher.answer.exam', ['students' => $students, 'exam' => $exam]);
+    }
+
 
     public function showExam($id)
     {

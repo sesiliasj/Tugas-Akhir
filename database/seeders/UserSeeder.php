@@ -35,6 +35,10 @@ class UserSeeder extends Seeder
         $student->assignRole('student');
         UserHasCourse::create([
             'user_id' => $student->id,
+            'course_id' => 1,
+        ]);
+        UserHasCourse::create([
+            'user_id' => $student->id,
             'course_id' => 3,
         ]);
         UserHasCourse::create([
