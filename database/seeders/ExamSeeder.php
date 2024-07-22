@@ -22,7 +22,7 @@ class ExamSeeder extends Seeder
             'course_id' => 1,
             'name' => 'Ujian Tengah Semester',
             'user_id' => 4,
-            'is_open' => true,
+            'is_open' => false,
         ]);
         Exam::create([
             'course_id' => 2,

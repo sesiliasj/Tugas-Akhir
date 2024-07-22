@@ -16,7 +16,7 @@
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-book"></i><span>Exam</span></a>
                     <ul class="dropdown-menu">
                         <li class='{{ Request::is('teacher/exam') ? 'active' : '' }}'>
-                            <a class="nav-link" href="{{ route('teacher.exam.index') }}">Index</a>
+                            <a class="nav-link" href="{{ route('teacher.exam.index') }}">All</a>
                         </li>
                         <li class="{{ Request::is('teacher/exam/create') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('teacher.exam.create') }}">Add Exam</a>
