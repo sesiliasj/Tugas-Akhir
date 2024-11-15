@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('exam_id')->constrained('exams');
             $table->foreignId('student_id')->constrained('users');
+            $table->foreignId('examcontent_id')->constrained('examcontents')->onDelete('cascade');
             $table->text('answer');
-            $table->integer('score');
+            $table->integer('score')->nullable();
         });
     }
 

@@ -13,12 +13,8 @@ class CourseSeeder extends Seeder
     public function run(): void
     {
         $courses = [
-            ['name' => 'Pemrograman Dasar'],
-            ['name' => 'Algoritma dan Struktur Data'],
-            ['name' => 'Desain Pengalaman Pengguna'],
-            ['name' => 'Pemrograman Web'],
-            ['name' => 'Pemrograman Berorientasi Objek'],
-            ['name' => 'Workshop Pemrograman Perangkat Bergerak'],
+            ['name' => 'Etika Profesi'],
+            ['name' => 'Manajemen Proyek'],
         ];
 
         foreach ($courses as $course) {

@@ -12,7 +12,7 @@ class Answer extends Model
     protected $table = 'answers';
 
     protected $fillable = [
-        'exam_id',
+        'examcontent_id',
         'student_id',
         'answer',
         'score',
