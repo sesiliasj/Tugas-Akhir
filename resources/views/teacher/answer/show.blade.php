@@ -34,30 +34,40 @@
                                             <label>{{ $exam->name }}</label>
                                         </div>
                                     </div>
-                                    <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">
-                                            AI Score
-                                        </label>
-                                        <div class="col-sm-12 col-md-7">
-                                            <label>0%</label>
-                                        </div>
-                                    </div>
-                                    @foreach ($examcontents as $examcontent)
+                                    @foreach ($examcontents as $index => $examcontent)
                                         <div class="form-group row mb-4">
                                             <label
                                                 class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Question</label>
                                             <div class="col-sm-12 col-md-7">
-                                                {!! $examcontent->content !!}
+                                                {!! $examcontent['content'] !!}
                                             </div>
                                         </div>
-                                        <div class="form-group row mb-4">
-                                            <label
-                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer</label>
-                                            <div class="col-sm-12 col-md-7">
-                                                {!! $answers[0]->answer !!}
+
+                                        @if (isset($answers[$index]))
+                                            <div class="form-group row mb-4">
+                                                <label
+                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer</label>
+                                                <div class="col-sm-12 col-md-7">
+                                                    {!! $answers[$index]['answer'] !!}
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="form-group row mb-4">
+                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">
+                                                    AI Score
+                                                </label>
+                                                <div class="col-sm-12 col-md-7">
+                                                    @if ($answers[$index]['score'] != null)
+                                                        <label>{{ $answers[$index]['score'] }}%</label>
+                                                    @else
+                                                        <label>null</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div>No answer available.</div>
+                                        @endif
                                     @endforeach
+
                                 </form>
                             </div>
                         </div>

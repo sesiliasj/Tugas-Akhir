@@ -27,6 +27,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Exam Name</th>
+                                            <th>Course</th>
                                             {{-- <th>Created At</th> --}}
                                             {{-- <th>Status</th> --}}
                                             <th>Action</th>
@@ -35,6 +36,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $exam->name }}</td>
+                                                <td>{{ $exam->course }}</td>
                                                 {{-- <td>{{ $exam->created_at }}</td> --}}
                                                 {{-- <td>
                                                     @if ($exam->is_open)

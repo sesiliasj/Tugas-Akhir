@@ -47,7 +47,7 @@
                                             <label
                                                 class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer</label>
                                             <div class="col-sm-12 col-md-7">
-                                                <textarea class="summernote-simple" name="answer"></textarea>
+                                                <textarea class="summernote-simple" name="answer[]"></textarea>
                                             </div>
                                         </div>
                                     @endforeach
