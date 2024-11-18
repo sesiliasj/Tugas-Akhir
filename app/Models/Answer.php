@@ -18,4 +18,14 @@ class Answer extends Model
         'score',
         'created_at'
     ];
+
+    public function examcontent()
+    {
+        return $this->belongsTo(Examcontent::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'student_id');
+    }
 }

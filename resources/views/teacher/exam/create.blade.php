@@ -38,7 +38,9 @@
                                     </div>
 
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Content</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">
+                                            Question
+                                        </label>
                                         <div class="col-sm-12 col-md-7">
                                             <div id="content-container">
                                                 <div class="content-group">
@@ -47,11 +49,17 @@
                                                         class="btn btn-danger btn-sm mt-2">Hapus</button>
                                                 </div>
                                             </div>
-                                            <button type="button" onclick="addContent()"
-                                                class="btn btn-success btn-sm mt-2">Tambah Isian</button>
                                         </div>
                                     </div>
-
+                                    <div class="form-group row mb-4">
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                                        <div class="col-sm-12 col-md-7">
+                                            <button type="button" onclick="addContent()"
+                                                class="btn btn-success btn-sm mt-2">Tambah
+                                                Isian
+                                            </button>
+                                        </div>
+                                    </div>
                                     <input type="hidden" name="course_id" value="{{ $course_id }}">
                                     <input type="hidden" name="user_id" value="{{ $user_id }}">
 
@@ -89,8 +97,7 @@
             `;
             container.appendChild(newContent);
 
-            // Initialize Summernote for new textarea
-            $('.summernote-simple').summernote();
+            addNotes();
         }
 
         function removeContent(button) {
@@ -98,9 +105,14 @@
             contentGroup.remove();
         }
 
-        // Initialize Summernote for the first content textarea
+        function addNotes() {
+            $(document).ready(function() {
+                $('.summernote-simple').summernote();
+            });
+        }
+
         $(document).ready(function() {
-            $('.summernote-simple').summernote();
+            $('#summernote-simple').summernote();
         });
     </script>
 @endpush

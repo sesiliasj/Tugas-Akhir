@@ -35,27 +35,22 @@
                                             <label>{{ $exam->name }}</label>
                                         </div>
                                     </div>
-                                    <div class="form-group row mb-4">
-                                        <label
-                                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Question</label>
-                                        <div class="col-sm-12 col-md-7">
-                                            {!! $exam->content !!}
+                                    @foreach ($exam->contents as $content)
+                                        <div class="form-group row mb-4">
+                                            <label
+                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Question</label>
+                                            <div class="col-sm-12 col-md-7">
+                                                {!! $content->content !!}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer</label>
-                                        <div class="col-sm-12 col-md-7">
-                                            <textarea class="summernote-simple" name="answer"></textarea>
+                                        <div class="form-group row mb-4">
+                                            <label
+                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer</label>
+                                            <div class="col-sm-12 col-md-7">
+                                                <textarea class="summernote-simple" name="answer"></textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    {{-- <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
-                                        <label class="custom-switch mt-2">
-                                            <input type="checkbox" class="custom-switch-input">
-                                            <span class="custom-switch-indicator"></span>
-                                        </label>
-                                        <input type="hidden" name="is_open" value="1">
-                                    </div> --}}
+                                    @endforeach
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                         <div class="col-sm-12 col-md-7">

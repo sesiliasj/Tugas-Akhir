@@ -15,4 +15,9 @@ class Exam extends Model
         'course_id',
         'is_open',
     ];
+
+    public function contents()
+    {
+        return $this->hasMany(Examcontent::class);
+    }
 }
