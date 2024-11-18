@@ -18,7 +18,7 @@
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="{{ route('teacher.dashboard') }}">Teacher</a></div>
                     <div class="breadcrumb-item"><a href="{{ route('teacher.answer.index') }}">Answer</a></div>
-                    <div class="breadcrumb-item">{{ $answer->id }}</div>
+                    <div class="breadcrumb-item">{{ $exam->id }}</div>
                 </div>
             </div>
 
@@ -29,24 +29,35 @@
                             <div class="card-body">
                                 <form action="" method="POST">
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Exam</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <label>{{ $answer->exam_id }}</label>
+                                            <label>{{ $exam->name }}</label>
                                         </div>
                                     </div>
                                     <div class="form-group row mb-4">
-                                        <label
-                                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Question</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">
+                                            AI Score
+                                        </label>
                                         <div class="col-sm-12 col-md-7">
-                                            {!! $exam->content !!}
+                                            <label>0%</label>
                                         </div>
                                     </div>
-                                    <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer</label>
-                                        <div class="col-sm-12 col-md-7">
-                                            {!! $answer->answer !!}
+                                    @foreach ($examcontents as $examcontent)
+                                        <div class="form-group row mb-4">
+                                            <label
+                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Question</label>
+                                            <div class="col-sm-12 col-md-7">
+                                                {!! $examcontent->content !!}
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="form-group row mb-4">
+                                            <label
+                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer</label>
+                                            <div class="col-sm-12 col-md-7">
+                                                {!! $answers[0]->answer !!}
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </form>
                             </div>
                         </div>

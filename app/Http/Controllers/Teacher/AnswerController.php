@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\UserHasCourse;
 use Illuminate\Http\Request;
 
+use function PHPSTORM_META\map;
+
 class AnswerController extends Controller
 {
     public function index()
@@ -35,8 +37,8 @@ class AnswerController extends Controller
         }
 
         foreach ($students as $student) {
-            $answer = Answer::where('exam_id', $id)->where('student_id', $student->id)->get();
-            $student->answer = $answer->first();
+            $answer = Answer::where('examcontent_id', $exam->contents[0]->id)->where('student_id', $student->id)->get();
+            $student->answer = $answer;
         }
 
         return view('teacher.answer.exam', ['students' => $students, 'exam' => $exam]);
@@ -59,8 +61,13 @@ class AnswerController extends Controller
 
     public function show($id)
     {
-        $answer = Answer::find($id);
-        $exam = Exam::find($answer->exam_id);
-        return view('teacher.answer.show', ['answer' => $answer, 'exam' => $exam]);
+        $exam = Exam::find($id);
+        $examcontents = $exam->contents;
+        $answers = collect();
+        foreach ($examcontents as $content) {
+            $answer = Answer::where('examcontent_id', $content->id)->get();
+            $answers = $answers->merge($answer);
+        }
+        return view('teacher.answer.show', ['answers' => $answers, 'examcontents' => $examcontents, 'exam' => $exam]);
     }
 }

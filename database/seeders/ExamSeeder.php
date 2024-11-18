@@ -14,21 +14,15 @@ class ExamSeeder extends Seeder
     {
         Exam::create([
             'course_id' => 1,
-            'name' => 'Ujian Akhir Semester',
-            'user_id' => 4,
-            'is_open' => true,
-        ]);
-        Exam::create([
-            'course_id' => 1,
             'name' => 'Ujian Tengah Semester',
-            'user_id' => 4,
-            'is_open' => false,
+            'user_id' => 3,
+            'is_open' => true,
         ]);
         Exam::create([
             'course_id' => 2,
-            'name' => 'Ujian Akhir Semester asd',
-            'user_id' => 5,
-            'is_open' => true,
+            'name' => 'Ujian Tengah Semester',
+            'user_id' => 4,
+            'is_open' => false,
         ]);
     }
 }

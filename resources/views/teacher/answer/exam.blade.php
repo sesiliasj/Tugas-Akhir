@@ -35,14 +35,14 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $student->name }}</td>
                                                 <td>
-                                                    @if ($student->answer)
+                                                    @if ($student->answer->count() > 0)
                                                         <div class="badge badge-success">Collected</div>
                                                     @else
                                                         <div class="badge badge-danger">Not Yet</div>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if ($student->answer)
+                                                    @if ($student->answer->count() > 0)
                                                         <a href="{{ route('teacher.answer.show', $exam->id) }}"
                                                             class="btn"><i class="fas fa-eye"></i></a>
                                                         <a href="{{ route('teacher.answer.show', $exam->id) }}"

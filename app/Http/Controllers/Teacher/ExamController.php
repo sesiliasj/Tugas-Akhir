@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Teacher\StoreExamRequest;
 use App\Models\Exam;
+use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
@@ -25,10 +26,17 @@ class ExamController extends Controller
         return view('teacher.exam.create', ['course_id' => $course_id, 'user_id' => $user_id]);
     }
 
-    public function store(StoreExamRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-        Exam::create($validated);
+        $exam = Exam::create([
+            'name' => $request->name,
+            'course_id' => $request->course_id,
+            'user_id' => $request->user_id,
+        ]);
+
+        foreach ($request->content as $contentItem) {
+            $exam->contents()->create(['content' => $contentItem]);
+        }
 
         return redirect()->route('teacher.exam.index');
     }

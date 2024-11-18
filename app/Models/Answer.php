@@ -12,10 +12,20 @@ class Answer extends Model
     protected $table = 'answers';
 
     protected $fillable = [
-        'exam_id',
+        'examcontent_id',
         'student_id',
         'answer',
         'score',
         'created_at'
     ];
+
+    public function examcontent()
+    {
+        return $this->belongsTo(Examcontent::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'student_id');
+    }
 }

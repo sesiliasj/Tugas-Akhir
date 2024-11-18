@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Exam extends Model
+class Examcontent extends Model
 {
     use HasFactory;
 
+    protected $table = 'examcontents';
+
     protected $fillable = [
-        'name',
-        'user_id',
-        'course_id',
-        'is_open',
+        'exam_id',
+        'content',
     ];
 
-    public function contents()
+    public function exam()
     {
-        return $this->hasMany(Examcontent::class);
+        return $this->belongsTo(Exam::class);
     }
 }
