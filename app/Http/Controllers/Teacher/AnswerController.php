@@ -9,6 +9,7 @@ use App\Models\Exam;
 use App\Models\User;
 use App\Models\UserHasCourse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 use function PHPSTORM_META\map;
 
@@ -59,15 +60,50 @@ class AnswerController extends Controller
         return view('teacher.answer.index', ['answers' => $answers]);
     }
 
-    public function show($id)
+    public function show($id, $studentId)
     {
         $exam = Exam::find($id);
         $examcontents = $exam->contents;
         $answers = collect();
         foreach ($examcontents as $content) {
-            $answer = Answer::where('examcontent_id', $content->id)->get();
+            $answer = Answer::where('examcontent_id', $content->id)->where('student_id', $studentId)->get();
+            if ($answer[0]->score == null) {
+                $answer[0]->score = $this->gpt($answer[0]->answer);
+                $answer[0]->score = (int) filter_var($answer[0]->score, FILTER_SANITIZE_NUMBER_INT);
+                $answer[0]->save();
+            }
             $answers = $answers->merge($answer);
         }
         return view('teacher.answer.show', ['answers' => $answers, 'examcontents' => $examcontents, 'exam' => $exam]);
+    }
+
+    public function gpt($text)
+    {
+        $url = env('API_GPT');
+
+        if (!$url) {
+            return response()->json(['error' => 'API_GPT URL is not configured in .env'], 500);
+        }
+
+        try {
+
+            $response = Http::post($url, [
+                'text' => $text,
+            ]);
+
+            if ($response->successful()) {
+                return $response->json("AI");
+            }
+
+            return response()->json([
+                'error' => 'Failed to send text to API_GPT',
+                'details' => $response->json(),
+            ], $response->status());
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'An error occurred while sending the text',
+                'details' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

@@ -109,8 +109,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
             });
             Route::prefix('/answer')->name('.answer')->group(function () {
                 Route::get('/', [TeacherAnswerController::class, 'index'])->name('.index');
-                Route::get('/{id}', [TeacherAnswerController::class, 'show'])->name('.show');
                 Route::get('/exam/{id}', [TeacherAnswerController::class, 'showAnswer'])->name('.exam');
+                Route::get('/exam/{id}/{studentId}', [TeacherAnswerController::class, 'show'])->name('.show');
             });
         });
     });
