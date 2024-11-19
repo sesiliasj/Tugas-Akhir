@@ -45,8 +45,8 @@
                                                     @if ($student->answer->count() > 0)
                                                         <a href="{{ route('teacher.answer.show', ['id' => $exam->id, 'studentId' => $student->id]) }}"
                                                             class="btn"><i class="fas fa-eye"></i></a>
-                                                        <a href="{{ route('teacher.answer.show', ['id' => $exam->id, 'studentId' => $student->id]) }}"
-                                                            class="btn"><i class="fas fa-download"></i>
+                                                        <a href="{{ route('teacher.answer.print') }}" class="btn"><i
+                                                                class="fas fa-download"></i>
                                                         </a>
                                                     @endif
                                                 </td>

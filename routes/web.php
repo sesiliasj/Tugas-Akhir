@@ -111,6 +111,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
                 Route::get('/', [TeacherAnswerController::class, 'index'])->name('.index');
                 Route::get('/exam/{id}', [TeacherAnswerController::class, 'showAnswer'])->name('.exam');
                 Route::get('/exam/{id}/{studentId}', [TeacherAnswerController::class, 'show'])->name('.show');
+                Route::get('/print', [TeacherAnswerController::class, 'print'])->name('.print');
             });
         });
     });

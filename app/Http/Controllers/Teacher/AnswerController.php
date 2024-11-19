@@ -8,10 +8,9 @@ use App\Models\Course;
 use App\Models\Exam;
 use App\Models\User;
 use App\Models\UserHasCourse;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
-use function PHPSTORM_META\map;
 
 class AnswerController extends Controller
 {
@@ -75,6 +74,34 @@ class AnswerController extends Controller
             $answers = $answers->merge($answer);
         }
         return view('teacher.answer.show', ['answers' => $answers, 'examcontents' => $examcontents, 'exam' => $exam]);
+    }
+
+    public function print()
+    {
+        $exam = (object) [
+            'id' => 1,
+            'name' => 'Sample Exam',
+        ];
+
+        $examcontents = [
+            ['content' => 'Question 1: What is Laravel?'],
+            ['content' => 'Question 2: Explain MVC architecture.'],
+        ];
+
+        $answers = [
+            ['answer' => 'Laravel is a PHP framework.', 'score' => 90],
+            ['answer' => 'MVC stands for Model-View-Controller.', 'score' => 85],
+        ];
+
+        $data = [
+            'exam' => $exam,
+            'examcontents' => $examcontents,
+            'answers' => $answers,
+        ];
+
+        $pdf = Pdf::loadView('teacher.answer.print', $data);
+
+        return $pdf->download('answer_report.pdf');
     }
 
     public function gpt($text)
