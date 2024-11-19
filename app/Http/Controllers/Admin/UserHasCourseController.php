@@ -15,7 +15,7 @@ class UserHasCourseController extends Controller
 
     public function addCourse($user_id, $course_id)
     {
-        $userHasCourse = new UserHasCourse();
+        $userHasCourse = new UserHasCourse;
         $userHasCourse->user_id = $user_id;
         $userHasCourse->course_id = $course_id;
         $userHasCourse->save();

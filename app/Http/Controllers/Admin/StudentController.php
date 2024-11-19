@@ -14,7 +14,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = User::role('student')->get();
-        $getCourse = new UserHasCourseController();
+        $getCourse = new UserHasCourseController;
         $course = [];
 
         foreach ($students as $student) {
@@ -33,7 +33,7 @@ class StudentController extends Controller
     {
         $validated = $request->validated();
 
-        $student = new User();
+        $student = new User;
         $student->name = $validated['name'];
         $student->email = $validated['email'];
         $student->password = bcrypt($validated['password']);
@@ -81,7 +81,7 @@ class StudentController extends Controller
     public function addCourse($id, Request $request)
     {
         foreach ($request->course_id as $course_id) {
-            $userHasCourse = new UserHasCourseController();
+            $userHasCourse = new UserHasCourseController;
             $userHasCourse->addCourse($id, $course_id);
         }
 

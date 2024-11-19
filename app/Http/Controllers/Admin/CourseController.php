@@ -25,7 +25,7 @@ class CourseController extends Controller
     {
         $validated = $request->validated();
 
-        $course = new Course();
+        $course = new Course;
         $course->fill($validated);
         $course->save();
 

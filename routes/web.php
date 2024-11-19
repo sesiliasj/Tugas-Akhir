@@ -12,7 +12,6 @@ use App\Http\Controllers\Teacher\ExamController as TeacherExamController;
 use App\Http\Controllers\Teacher\TeacherController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use PhpParser\Node\Expr\Include_;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +110,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
                 Route::get('/', [TeacherAnswerController::class, 'index'])->name('.index');
                 Route::get('/exam/{id}', [TeacherAnswerController::class, 'showAnswer'])->name('.exam');
                 Route::get('/exam/{id}/{studentId}', [TeacherAnswerController::class, 'show'])->name('.show');
+                Route::get('/print/{id}/{studentId}', [TeacherAnswerController::class, 'print'])->name('.print');
             });
         });
     });

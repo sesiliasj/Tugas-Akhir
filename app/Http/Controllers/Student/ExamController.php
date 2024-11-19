@@ -14,6 +14,7 @@ class ExamController extends Controller
     public function index()
     {
         $exams = $this->getActiveExam();
+
         return view('student.exam.index', ['exams' => $exams]);
     }
 
@@ -49,18 +50,21 @@ class ExamController extends Controller
             $exam = $exam->map(function ($exam) {
                 $exam->status = 1;
                 $exam->course = Course::find($exam->course_id)->name;
+
                 return $exam;
             });
             $examcontent = Examcontent::whereIn('exam_id', $exam->pluck('id')->toArray())->get();
             $answer = Answer::where('student_id', auth()->id())->where('examcontent_id', $examcontent->pluck('id')->toArray())->get();
             if ($answer->count() > 0) {
-                $exam = $exam->map(function ($exam) use ($answer) {
+                $exam = $exam->map(function ($exam) {
                     $exam->status = 0;
+
                     return $exam;
                 });
             }
             $exams = $exams->merge($exam);
         }
+
         return $exams;
     }
 }

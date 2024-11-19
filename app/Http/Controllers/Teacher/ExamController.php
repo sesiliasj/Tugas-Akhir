@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Teacher\StoreExamRequest;
 use App\Models\Exam;
 use Illuminate\Http\Request;
 
@@ -11,7 +10,7 @@ class ExamController extends Controller
 {
     public function index()
     {
-        $userHasCourseController = new UserHasCourseController();
+        $userHasCourseController = new UserHasCourseController;
         $course_id = $userHasCourseController->getCourseId(auth()->user()->id);
         $exams = Exam::where('course_id', $course_id)->get();
 
@@ -20,9 +19,10 @@ class ExamController extends Controller
 
     public function create()
     {
-        $userHasCourseController = new UserHasCourseController();
+        $userHasCourseController = new UserHasCourseController;
         $course_id = $userHasCourseController->getCourseId(auth()->user()->id);
         $user_id = auth()->user()->id;
+
         return view('teacher.exam.create', ['course_id' => $course_id, 'user_id' => $user_id]);
     }
 

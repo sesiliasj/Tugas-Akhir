@@ -10,9 +10,10 @@ class UserHasCourseController extends Controller
     public function getCourseId($user_id)
     {
         $course = UserHasCourse::where('user_id', $user_id)->get()->first();
-        if (!$course) {
+        if (! $course) {
             return '';
         }
+
         return $course['course_id'];
     }
 }
