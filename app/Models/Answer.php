@@ -16,7 +16,7 @@ class Answer extends Model
         'student_id',
         'answer',
         'score',
-        'created_at'
+        'created_at',
     ];
 
     public function examcontent()

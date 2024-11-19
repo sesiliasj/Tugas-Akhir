@@ -14,7 +14,7 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = User::role('teacher')->get();
-        $getCourse = new UserHasCourseController();
+        $getCourse = new UserHasCourseController;
         $course = [];
 
         foreach ($teachers as $teacher) {
@@ -32,7 +32,7 @@ class TeacherController extends Controller
     public function store(StoreTeacherRequest $request)
     {
         $validated = $request->validated();
-        $teacher = new User();
+        $teacher = new User;
         $teacher->name = $validated['name'];
         $teacher->email = $validated['email'];
         $teacher->password = bcrypt($validated['password']);
@@ -80,7 +80,7 @@ class TeacherController extends Controller
     public function addCourse($id, Request $request)
     {
         $course_id = $request->course_id;
-        $userHasCourse = new UserHasCourseController();
+        $userHasCourse = new UserHasCourseController;
         $userHasCourse->addCourse($id, $course_id);
 
         return redirect()->route('admin.teacher.index');

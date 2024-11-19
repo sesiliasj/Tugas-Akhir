@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\UserHasCourse;
-use Egulias\EmailValidator\Result\Reason\SpoofEmail;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder

@@ -9,7 +9,6 @@ use App\Models\Exam;
 use App\Models\User;
 use App\Models\UserHasCourse;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class AnswerController extends Controller
@@ -19,6 +18,7 @@ class AnswerController extends Controller
         $course = new UserHasCourseController;
         $course_id = $course->getCourseId(auth()->user()->id);
         $exams = Exam::where('course_id', $course_id)->get();
+
         return view('teacher.answer.index', ['exams' => $exams]);
     }
 
@@ -44,7 +44,6 @@ class AnswerController extends Controller
         return view('teacher.answer.exam', ['students' => $students, 'exam' => $exam]);
     }
 
-
     public function showExam($id)
     {
         $course = new UserHasCourseController;
@@ -56,6 +55,7 @@ class AnswerController extends Controller
             $answers = $answers->merge($answer);
         }
         $answer->sortByDesc('created_at');
+
         return view('teacher.answer.index', ['answers' => $answers]);
     }
 
@@ -73,53 +73,57 @@ class AnswerController extends Controller
             }
             $answers = $answers->merge($answer);
         }
+
         return view('teacher.answer.show', ['answers' => $answers, 'examcontents' => $examcontents, 'exam' => $exam]);
     }
 
-    public function print()
+    public function print($id, $studentId)
     {
-        $exam = (object) [
-            'id' => 1,
-            'name' => 'Sample Exam',
-        ];
-
-        $examcontents = [
-            ['content' => 'Question 1: What is Laravel?'],
-            ['content' => 'Question 2: Explain MVC architecture.'],
-        ];
-
-        $answers = [
-            ['answer' => 'Laravel is a PHP framework.', 'score' => 90],
-            ['answer' => 'MVC stands for Model-View-Controller.', 'score' => 85],
-        ];
+        $student = User::find($studentId);
+        $exam = Exam::find($id);
+        $course = Course::find($exam->course_id);
+        $examcontents = $exam->contents;
+        $answers = collect();
+        foreach ($examcontents as $content) {
+            $answer = Answer::where('examcontent_id', $content->id)->where('student_id', $studentId)->get();
+            if ($answer[0]->score == null) {
+                $answer[0]->score = $this->gpt($answer[0]->answer);
+                $answer[0]->score = (int) filter_var($answer[0]->score, FILTER_SANITIZE_NUMBER_INT);
+                $answer[0]->save();
+            }
+            $answers = $answers->merge($answer);
+        }
 
         $data = [
             'exam' => $exam,
             'examcontents' => $examcontents,
             'answers' => $answers,
+            'student' => $student,
+            'course' => $course,
         ];
 
         $pdf = Pdf::loadView('teacher.answer.print', $data);
 
-        return $pdf->download('answer_report.pdf');
+        $file_name = $student->name.'_'.$exam->name.'.pdf';
+
+        return $pdf->download($file_name);
     }
 
     public function gpt($text)
     {
         $url = env('API_GPT');
 
-        if (!$url) {
+        if (! $url) {
             return response()->json(['error' => 'API_GPT URL is not configured in .env'], 500);
         }
 
         try {
-
             $response = Http::post($url, [
                 'text' => $text,
             ]);
 
             if ($response->successful()) {
-                return $response->json("AI");
+                return $response->json('AI');
             }
 
             return response()->json([

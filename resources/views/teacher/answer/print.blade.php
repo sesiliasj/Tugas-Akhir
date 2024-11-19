@@ -58,16 +58,19 @@
         <h1>{{ $exam->name }}</h1>
     </div>
 
-    <div class="breadcrumb">
-        <span class="breadcrumb-item">Teacher</span>
-        <span class="breadcrumb-item">Answer</span>
-        <span class="breadcrumb-item">{{ $exam->id }}</span>
-    </div>
-
     <div class="section">
+        <div class="form-group">
+            <label>Name:</label>
+            <span>{{ $student->name }}</span>
+        </div>
         <div class="form-group">
             <label>Exam:</label>
             <span>{{ $exam->name }}</span>
+        </div>
+
+        <div class="form-group">
+            <label>Course:</label>
+            <span>{{ $course->name }}</span>
         </div>
 
         @foreach ($examcontents as $index => $examcontent)
