@@ -64,17 +64,28 @@ class AnswerController extends Controller
         $exam = Exam::find($id);
         $examcontents = $exam->contents;
         $answers = collect();
-        foreach ($examcontents as $content) {
+        $count = $examcontents->count();
+        $score = collect();
+        $totalscore = 0;
+        foreach ($examcontents as $index => $content) {
             $answer = Answer::where('examcontent_id', $content->id)->where('student_id', $studentId)->get();
             if ($answer[0]->score == null) {
                 $answer[0]->score = $this->gpt($answer[0]->answer);
                 $answer[0]->score = (int) filter_var($answer[0]->score, FILTER_SANITIZE_NUMBER_INT);
                 $answer[0]->save();
             }
+            foreach ($answer as $ans) {
+                if ($ans->score >= 55) {
+                    $score[$index] = 100 / $count / 2;
+                    $totalscore += 100 / $count / 2;
+                } else {
+                    $score[$index] = 100 / $count;
+                    $totalscore += 100 / $count;
+                }
+            }
             $answers = $answers->merge($answer);
         }
-
-        return view('teacher.answer.show', ['answers' => $answers, 'examcontents' => $examcontents, 'exam' => $exam]);
+        return view('teacher.answer.show', ['answers' => $answers, 'examcontents' => $examcontents, 'exam' => $exam, 'score' => $score, 'totalscore' => $totalscore]);
     }
 
     public function print($id, $studentId)
@@ -84,12 +95,24 @@ class AnswerController extends Controller
         $course = Course::find($exam->course_id);
         $examcontents = $exam->contents;
         $answers = collect();
-        foreach ($examcontents as $content) {
+        $count = $examcontents->count();
+        $score = collect();
+        $totalscore = 0;
+        foreach ($examcontents as $index => $content) {
             $answer = Answer::where('examcontent_id', $content->id)->where('student_id', $studentId)->get();
             if ($answer[0]->score == null) {
                 $answer[0]->score = $this->gpt($answer[0]->answer);
                 $answer[0]->score = (int) filter_var($answer[0]->score, FILTER_SANITIZE_NUMBER_INT);
                 $answer[0]->save();
+            }
+            foreach ($answer as $ans) {
+                if ($ans->score >= 55) {
+                    $score[$index] = 100 / $count / 2;
+                    $totalscore += 100 / $count / 2;
+                } else {
+                    $score[$index] = 100 / $count;
+                    $totalscore += 100 / $count;
+                }
             }
             $answers = $answers->merge($answer);
         }
@@ -100,6 +123,8 @@ class AnswerController extends Controller
             'answers' => $answers,
             'student' => $student,
             'course' => $course,
+            'score' => $score,
+            'totalscore' => $totalscore,
         ];
 
         $pdf = Pdf::loadView('teacher.answer.print', $data);
@@ -113,28 +138,28 @@ class AnswerController extends Controller
     {
         $url = env('API_GPT');
 
+        $text = $this->removeHtmlTagsAndNewlines($text);
         if (! $url) {
             return response()->json(['error' => 'API_GPT URL is not configured in .env'], 500);
         }
+        $response = Http::post($url, [
+            'text' => $text,
+        ]);
 
-        try {
-            $response = Http::post($url, [
-                'text' => $text,
-            ]);
-
-            if ($response->successful()) {
-                return $response->json('AI');
-            }
-
-            return response()->json([
-                'error' => 'Failed to send text to API_GPT',
-                'details' => $response->json(),
-            ], $response->status());
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'An error occurred while sending the text',
-                'details' => $e->getMessage(),
-            ], 500);
+        if ($response->successful()) {
+            return $response->json('AI');
         }
+
+        return response()->json([
+            'error' => 'Failed to send to API_GPT',
+            'details' => $response->json(),
+        ], $response->status());
+    }
+
+    function removeHtmlTagsAndNewlines($text)
+    {
+        $textWithoutHtml = strip_tags($text);
+        $textWithoutNewlines = preg_replace('/\s+/', ' ', $textWithoutHtml);
+        return $textWithoutNewlines;
     }
 }

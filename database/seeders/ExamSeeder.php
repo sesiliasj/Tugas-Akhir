@@ -24,5 +24,11 @@ class ExamSeeder extends Seeder
             'user_id' => 4,
             'is_open' => false,
         ]);
+        Exam::create([
+            'course_id' => 1,
+            'name' => 'Ujian Akhir Semester',
+            'user_id' => 3,
+            'is_open' => true,
+        ]);
     }
 }

@@ -73,6 +73,11 @@
             <span>{{ $course->name }}</span>
         </div>
 
+        <div class="form-group">
+            <label>Score:</label>
+            <span>{{ $totalscore }}</span>
+        </div>
+
         @foreach ($examcontents as $index => $examcontent)
             <div class="form-group">
                 <label>Question {{ $index + 1 }}:</label>
@@ -92,6 +97,10 @@
                 <div class="form-group">
                     <label>AI Score:</label>
                     <span>{{ $answers[$index]['score'] !== null ? $answers[$index]['score'] . '%' : 'null' }}</span>
+                </div>
+                <div class="form-group">
+                    <label>Score Weight:</label>
+                    <span>{{ $score[$index] !== null ? $score[$index] : 'null' }}</span>
                 </div>
             @else
                 <div class="form-group">
