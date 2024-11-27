@@ -35,16 +35,24 @@
                                         </div>
                                     </div>
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Score</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Avg AI
+                                            Score</label>
                                         <div class="col-sm-12 col-md-7">
                                             <label>{{ $totalscore }}</label>
                                         </div>
                                     </div>
-                                        
+                                    <div class="form-group row mb-4">
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Weight
+                                            Score</label>
+                                        <div class="col-sm-12 col-md-7">
+                                            <label>{{ $totalweightscore }}</label>
+                                        </div>
+                                    </div>
+
                                     @foreach ($examcontents as $index => $examcontent)
                                         <div class="form-group row mb-4">
-                                            <label
-                                                class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Question {{ $index+1 }}</label>
+                                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Question
+                                                {{ $index + 1 }}</label>
                                             <div class="col-sm-12 col-md-7">
                                                 {!! $examcontent['content'] !!}
                                             </div>
@@ -52,15 +60,15 @@
 
                                         @if (isset($answers[$index]))
                                             <div class="form-group row mb-4">
-                                                <label
-                                                    class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer {{ $index+1 }}</label>
+                                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Answer
+                                                    {{ $index + 1 }}</label>
                                                 <div class="col-sm-12 col-md-7">
                                                     {!! $answers[$index]['answer'] !!}
                                                 </div>
                                             </div>
                                             <div class="form-group row mb-4">
                                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">
-                                                    AI Score {{ $index+1 }}
+                                                    AI Score {{ $index + 1 }}
                                                 </label>
                                                 <div class="col-sm-12 col-md-7">
                                                     @if ($answers[$index]['score'] != null)
@@ -72,7 +80,7 @@
                                             </div>
                                             <div class="form-group row mb-4">
                                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">
-                                                    Score Weight {{ $index+1 }}
+                                                    Score Weight {{ $index + 1 }}
                                                 </label>
                                                 <div class="col-sm-12 col-md-7">
                                                     @if ($score[$index] != null)

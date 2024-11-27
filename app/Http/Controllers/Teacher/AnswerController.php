@@ -66,6 +66,7 @@ class AnswerController extends Controller
         $answers = collect();
         $count = $examcontents->count();
         $score = collect();
+        $totalweightscore = 0;
         $totalscore = 0;
         foreach ($examcontents as $index => $content) {
             $answer = Answer::where('examcontent_id', $content->id)->where('student_id', $studentId)->get();
@@ -77,15 +78,15 @@ class AnswerController extends Controller
             foreach ($answer as $ans) {
                 if ($ans->score >= 55) {
                     $score[$index] = 100 / $count / 2;
-                    $totalscore += 100 / $count / 2;
+                    $totalweightscore += 100 / $count / 2;
                 } else {
                     $score[$index] = 100 / $count;
-                    $totalscore += 100 / $count;
+                    $totalweightscore += 100 / $count;
                 }
             }
             $answers = $answers->merge($answer);
         }
-        return view('teacher.answer.show', ['answers' => $answers, 'examcontents' => $examcontents, 'exam' => $exam, 'score' => $score, 'totalscore' => $totalscore]);
+        return view('teacher.answer.show', ['answers' => $answers, 'examcontents' => $examcontents, 'exam' => $exam, 'score' => $score, 'totalweightscore' => $totalweightscore, 'totalscore' => $totalscore]);
     }
 
     public function print($id, $studentId)
@@ -97,6 +98,7 @@ class AnswerController extends Controller
         $answers = collect();
         $count = $examcontents->count();
         $score = collect();
+        $totalweightscore = 0;
         $totalscore = 0;
         foreach ($examcontents as $index => $content) {
             $answer = Answer::where('examcontent_id', $content->id)->where('student_id', $studentId)->get();
@@ -108,10 +110,15 @@ class AnswerController extends Controller
             foreach ($answer as $ans) {
                 if ($ans->score >= 55) {
                     $score[$index] = 100 / $count / 2;
-                    $totalscore += 100 / $count / 2;
+                    $totalweightscore += 100 / $count / 2;
                 } else {
                     $score[$index] = 100 / $count;
-                    $totalscore += 100 / $count;
+                    $totalweightscore += 100 / $count;
+                }
+                if ($totalscore == 0) {
+                    $totalscore = $ans->score;
+                } else {
+                    $totalscore = ($totalscore + $ans->score) / 2;
                 }
             }
             $answers = $answers->merge($answer);
@@ -124,12 +131,13 @@ class AnswerController extends Controller
             'student' => $student,
             'course' => $course,
             'score' => $score,
+            'totalweightscore' => $totalweightscore,
             'totalscore' => $totalscore,
         ];
 
         $pdf = Pdf::loadView('teacher.answer.print', $data);
 
-        $file_name = $student->name.'_'.$exam->name.'.pdf';
+        $file_name = $student->name . '_' . $exam->name . '.pdf';
 
         return $pdf->download($file_name);
     }
