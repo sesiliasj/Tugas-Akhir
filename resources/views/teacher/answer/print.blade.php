@@ -74,8 +74,13 @@
         </div>
 
         <div class="form-group">
-            <label>Score:</label>
+            <label>Avg AI Score:</label>
             <span>{{ $totalscore }}</span>
+        </div>
+
+        <div class="form-group">
+            <label>Weight Score:</label>
+            <span>{{ $totalweightscore }}</span>
         </div>
 
         @foreach ($examcontents as $index => $examcontent)
