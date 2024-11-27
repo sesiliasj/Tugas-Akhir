@@ -71,11 +71,7 @@
                                                     AI Score {{ $index + 1 }}
                                                 </label>
                                                 <div class="col-sm-12 col-md-7">
-                                                    @if ($answers[$index]['score'] != null)
-                                                        <label>{{ $answers[$index]['score'] }}%</label>
-                                                    @else
-                                                        <label>null</label>
-                                                    @endif
+                                                    <label>{{ $answers[$index]['score'] }}%</label>
                                                 </div>
                                             </div>
                                             <div class="form-group row mb-4">
@@ -106,11 +102,8 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
     <script src="{{ asset('library/summernote/dist/summernote-bs4.js') }}"></script>
     <script src="{{ asset('library/codemirror/lib/codemirror.js') }}"></script>
     <script src="{{ asset('library/codemirror/mode/javascript/javascript.js') }}"></script>
     <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
-
-    <!-- Page Specific JS File -->
 @endpush
