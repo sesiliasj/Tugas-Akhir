@@ -47,7 +47,7 @@
                                                         <a href="{{ route('teacher.answer.print', ['id' => $exam->id, 'studentId' => $student->id]) }}"
                                                             class="btn"><i class="fas fa-download"></i></a>
                                                         <a href="javascript:void(0);" class="btn btn-star"
-                                                            data-student-id="{{ $student->id }}">
+                                                            data-student-score="{{ $student->totalscore }}">
                                                             <i class="fas fa-star"></i>
                                                         </a>
                                                     @endif
@@ -75,7 +75,7 @@
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <div id="highlight-student-id" class="p-3 my-3 bg-primary text-white font-weight-bold rounded"
+                    <div id="highlight-student-score" class="p-3 my-3 bg-primary text-white font-weight-bold rounded"
                         style="font-size: 1.5rem;">
                     </div>
                 </div>
@@ -93,9 +93,8 @@
     <script>
         $(document).ready(function() {
             $('.btn-star').on('click', function() {
-                const studentId = $(this).data('student-id');
-                $('#highlight-student-id').text('Student ID: ' + studentId);
-                $('#confirm-star').data('student-id', studentId);
+                const studentScore = $(this).data('student-score');
+                $('#highlight-student-score').text(studentScore);
                 $('#starModal').modal('show');
             });
         });

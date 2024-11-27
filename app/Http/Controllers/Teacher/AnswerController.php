@@ -25,7 +25,14 @@ class AnswerController extends Controller
     {
         $exam = Exam::find($id);
         $students = $this->getStudentsWithAnswers($exam);
-
+        foreach ($students as $student) {
+            if ($student->answer->count() > 0) {
+                $data = $this->calculateScores($exam, $student->id);
+                $student->totalscore = $data['totalscore'];
+            } else {
+                $student->totalscore = 0;
+            }
+        }
         return view('teacher.answer.exam', ['students' => $students, 'exam' => $exam]);
     }
 
